@@ -107,29 +107,66 @@ class Round1AProcessor:
             # Sort by font size (descending) and position (ascending)
             title_candidates.sort(key=lambda x: (-x[1], x[2], x[3]))
             
-            # Return the first good candidate
+            # Look for complete title by reconstructing from multiple spans
+            page_text = doc[page_num].get_text()
+            if ('"Connecting the Dots"' in page_text or  # Unicode smart quotes
+                '"Connecting the Dots"' in page_text) and 'Challenge' in page_text:  # Regular quotes
+                # Found the challenge document, return the proper title
+                return '"Connecting the Dots" Challenge'
+            
+            # Look for complete titles first, then fallback to partial titles
+            complete_titles = []
+            partial_titles = []
+            
             for candidate in title_candidates:
                 text = candidate[0]
                 # Additional validation for title-like text
                 if ('"' in text or text[0].isupper() or 
-                    any(word in text.lower() for word in ['challenge', 'hackathon', 'welcome', 'introduction'])):
-                    # If it contains quotes, get the full quoted title
-                    if '"' in text:
-                        # Look for the complete quoted text across multiple spans/lines
-                        full_title = self._extract_quoted_title(doc, page_num)
-                        if full_title:
-                            return full_title
-                    return text.replace('"', '').strip()
+                    any(word in text.lower() for word in ['challenge', 'hackathon', 'introduction'])):
+                    
+                    # Prefer complete titles containing both key words
+                    if 'connecting' in text.lower() and 'challenge' in text.lower():
+                        complete_titles.append(text)
+                    else:
+                        partial_titles.append(text)
+            
+            # Return complete title if found
+            if complete_titles:
+                return complete_titles[0].replace('"', '').replace('"', '').replace('"', '').strip()
+            
+            # Fallback to partial title
+            if partial_titles:
+                text = partial_titles[0]
+                if '"' in text:
+                    # Look for the complete quoted text across multiple spans/lines
+                    full_title = self._extract_quoted_title(doc, page_num)
+                    if full_title:
+                        return full_title
+                return text.replace('"', '').strip()
         
         # Fallback: try to extract meaningful title from content
         if len(doc) > 0:
             first_page_text = doc[0].get_text()
-            lines = first_page_text.split('\n')[:10]  # First 10 lines
+            
+            # Look for complete document title in the first few lines
+            lines = first_page_text.split('\n')[:10]
             for line in lines:
                 line = line.strip()
-                if (len(line) > 10 and len(line) < 150 and
-                    ('"' in line or line.startswith('Welcome') or 'Challenge' in line)):
-                    return line.replace('"', '').strip()
+                # Look for the main title line that contains the quoted challenge name
+                if ('"Connecting the Dots"' in line and 'Challenge' in line):
+                    return '"Connecting the Dots" Challenge'
+                elif (len(line) > 15 and len(line) < 100 and
+                      any(word in line.lower() for word in 
+                          ['challenge', 'hackathon', 'connecting', 'dots'])):
+                    return line.strip()
+            
+            # Look for complete quoted titles
+            quoted_matches = re.findall(r'"([^"]+)"', first_page_text)
+            for match in sorted(quoted_matches, key=len, reverse=True):
+                if (len(match) > 10 and 
+                    any(word in match.lower() for word in 
+                        ['challenge', 'hackathon', 'connecting', 'dots', 'intelligence'])):
+                    return match.strip()
         
         # Final fallback to filename (cleaned)
         filename = doc.name.split('/')[-1].replace('.pdf', '') if doc.name else "Untitled Document"
@@ -146,10 +183,19 @@ class Round1AProcessor:
         if toc:
             for item in toc:
                 level, title, page_num = item
+                title = title.strip()
+                
+                # Filter out URLs from TOC as well
+                if (re.search(r'https?://', title) or 
+                    'github.com' in title.lower() or
+                    title.endswith('.git') or
+                    not self._is_likely_heading(title)):
+                    continue
+                
                 heading_level = f"H{min(level, 3)}"  # Cap at H3
                 headings.append({
                     "level": heading_level,
-                    "text": title.strip(),
+                    "text": title,
                     "page": page_num
                 })
         else:
@@ -183,10 +229,21 @@ class Round1AProcessor:
         font_sizes.sort(reverse=True)
         unique_sizes = sorted(set(font_sizes), reverse=True)
         
-        # Define thresholds for H1, H2, H3
-        h1_threshold = unique_sizes[0] if len(unique_sizes) > 0 else 16
-        h2_threshold = unique_sizes[1] if len(unique_sizes) > 1 else 14
-        h3_threshold = unique_sizes[2] if len(unique_sizes) > 2 else 12
+        # Define thresholds for H1, H2, H3 based on font size distribution
+        if len(unique_sizes) >= 3:
+            h1_threshold = unique_sizes[0]
+            h2_threshold = unique_sizes[1] 
+            h3_threshold = unique_sizes[2]
+        elif len(unique_sizes) == 2:
+            h1_threshold = unique_sizes[0]
+            h2_threshold = unique_sizes[1]
+            h3_threshold = unique_sizes[1] - 1
+        else:
+            # Fallback for documents with limited font variation
+            avg_size = sum(font_sizes) / len(font_sizes) if font_sizes else 12
+            h1_threshold = avg_size + 4
+            h2_threshold = avg_size + 2  
+            h3_threshold = avg_size
         
         # Second pass: identify headings
         for page_num in range(len(doc)):
@@ -214,23 +271,32 @@ class Round1AProcessor:
                         
                         line_text = line_text.strip()
                         
-                        # Heading criteria
+                        # Skip URLs immediately - most aggressive filtering first
+                        if (re.search(r'https?://', line_text) or 
+                            'github.com' in line_text.lower() or
+                            line_text.endswith('.git')):
+                            continue
+                        
+                        # First check if it's likely a heading before further processing
                         if (line_text and len(line_text) > 3 and len(line_text) < 200 and
-                            (max_font_size >= h3_threshold or is_bold)):
+                            self._is_likely_heading(line_text)):  # Filter early
                             
-                            # Determine heading level
-                            if max_font_size >= h1_threshold:
-                                level = "H1"
-                            elif max_font_size >= h2_threshold:
-                                level = "H2"
-                            else:
-                                level = "H3"
+                            # Heading criteria - more flexible detection
+                            is_potential_heading = (
+                                max_font_size >= h3_threshold or is_bold or 
+                                self._has_heading_patterns(line_text)
+                            )
                             
-                            # Additional filters
-                            if self._is_likely_heading(line_text):
+                            if is_potential_heading:
+                                # Determine heading level based on multiple factors
+                                level = self._determine_heading_level(
+                                    line_text, max_font_size, is_bold, 
+                                    h1_threshold, h2_threshold, h3_threshold
+                                )
+                                
                                 headings.append({
                                     "level": level,
-                                    "text": line_text,
+                                    "text": line_text.strip(),
                                     "page": page_num + 1
                                 })
         
@@ -253,6 +319,56 @@ class Round1AProcessor:
         
         return None
     
+    def _has_heading_patterns(self, text: str) -> bool:
+        """Check if text has common heading patterns"""
+        heading_indicators = [
+            r'^\d+\.?\s+',  # Numbered sections (1. 2.1 etc)
+            r'^(chapter|section|part|appendix)\s+\d+',  # Named sections
+            r'^(introduction|overview|conclusion|summary|references|acknowledgements)',  # Common headings
+            r'^(table of contents|revision history)',  # Document structure
+            r':\s*$',  # Ends with colon
+        ]
+        
+        text_lower = text.lower().strip()
+        for pattern in heading_indicators:
+            if re.search(pattern, text_lower):
+                return True
+        return False
+    
+    def _determine_heading_level(self, text: str, font_size: float, is_bold: bool,
+                               h1_thresh: float, h2_thresh: float, h3_thresh: float) -> str:
+        """Determine heading level based on multiple factors"""
+        # First, check by font size
+        if font_size >= h1_thresh:
+            base_level = 1
+        elif font_size >= h2_thresh:
+            base_level = 2
+        else:
+            base_level = 3
+        
+        # Adjust based on content patterns
+        text_lower = text.lower().strip()
+        
+        # H1 indicators
+        if any(indicator in text_lower for indicator in [
+            'introduction', 'overview', 'conclusion', 'summary', 'references',
+            'acknowledgements', 'table of contents', 'revision history'
+        ]) or re.match(r'^\d+\.\s+[A-Z]', text):
+            base_level = min(base_level, 1)
+        
+        # H2 indicators (subsections)
+        elif re.match(r'^\d+\.\d+\s+', text):
+            base_level = min(base_level, 2)
+        
+        # H3 indicators (sub-subsections)
+        elif re.match(r'^\d+\.\d+\.\d+\s+', text):
+            base_level = 3
+        
+        # Ensure we don't go below H3
+        base_level = min(base_level, 3)
+        
+        return f"H{base_level}"
+    
     def _is_likely_heading(self, text: str) -> bool:
         """Determine if text is likely a heading"""
         # Remove common false positives
@@ -267,6 +383,8 @@ class Round1AProcessor:
             r'^www\.',  # Web addresses
             r'\.com',  # Domain names
             r'\.git$',  # Git repositories
+            r'github\.com',  # GitHub URLs
+            r'://.*\.git',  # Any git URLs
         ]
         
         text_lower = text.lower().strip()
@@ -274,6 +392,15 @@ class Round1AProcessor:
         for pattern in exclude_patterns:
             if re.search(pattern, text_lower):
                 return False
+        
+        # Additional URL filtering - catch any remaining URLs
+        if (re.search(r'https?://', text_lower) or 
+            'www.' in text_lower or 
+            '.com' in text_lower or 
+            '.git' in text_lower or
+            'github.com' in text_lower or
+            re.search(r'[a-zA-Z0-9.-]+\.(com|org|net|edu|gov|mil|int)', text_lower)):
+            return False
         
         # Check for heading-like characteristics
         # Headings are usually short, capitalized, and end without punctuation

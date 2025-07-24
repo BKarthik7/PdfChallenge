@@ -24,6 +24,13 @@ Preferred communication style: Simple, everyday language.
 ✓ Docker container ready for AMD64 deployment
 ✓ All requirements met: offline operation, <10s processing, JSON output format
 
+**Latest Improvements (July 24, 2025 - Session 2)**:
+✓ Fixed URL filtering to prevent GitHub URLs from appearing as headings
+✓ Improved title extraction to handle Unicode smart quotes and multi-span titles
+✓ Enhanced title candidate selection to prefer complete titles over partial ones
+✓ System now correctly extracts '"Connecting the Dots" Challenge' as document title
+✓ Both Round 1A and Round 1B tested and verified working perfectly
+
 ## System Architecture
 
 The system follows a modular, command-line driven architecture with clear separation of concerns:

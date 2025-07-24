@@ -1,11 +1,13 @@
 {
   "metadata": {
     "input_documents": [
-      "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf"
+      "file02.pdf",
+      "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
+      "file02_1753354244993.pdf"
     ],
     "persona": "PhD Researcher in Computational Biology specializing in AI applications for drug discovery and molecular analysis",
     "job_to_be_done": "Prepare a comprehensive literature review focusing on AI methodologies for document intelligence, including PDF structure extraction, natural language processing techniques, and persona-driven content analysis systems",
-    "processing_timestamp": "2025-07-24T09:17:18.362570"
+    "processing_timestamp": "2025-07-24T10:55:26.732384"
   },
   "extracted_sections": [
     {
@@ -58,88 +60,95 @@
       "text": "PDFs are everywhere — but machines don’t naturally understand their structure. By building an outline extractor, you’re enabling smarter document experiences, like semantic search, recommendation systems, and insight generation. What You Need to Build You must build a solution that: • Accepts a PDF file (up to 50 pages) • Extracts: o Title o Headings: H1, H2, H3 (with level and page number) • Outputs a valid JSON file in the format below: \"title\": \"Understanding AI\", \"outline\": [ { \"level\": \"H1\""
     },
     {
+      "document": "file02.pdf",
+      "page_number": 1,
+      "section_title": "International Software Testing Qualifications Board",
+      "importance_rank": 8,
+      "text": "Copyright Notice This document may be copied in its entirety, or extracts made, if the source is acknowledged."
+    },
+    {
+      "document": "file02_1753354244993.pdf",
+      "page_number": 1,
+      "section_title": "International Software Testing Qualifications Board",
+      "importance_rank": 9,
+      "text": "Copyright Notice This document may be copied in its entirety, or extracts made, if the source is acknowledged."
+    },
+    {
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 9,
       "section_title": "Description",
-      "importance_rank": 8,
+      "importance_rank": 10,
       "text": "Section Relevance How well selected sections match persona + job requirements with proper stack ranking Sub-Section Relevance Quality of granular subsection extraction and ranking"
     },
     {
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 2,
       "section_title": "Introduction",
-      "importance_rank": 9,
+      "importance_rank": 11,
       "text": "Welcome to the “Connecting the Dots” Challenge Rethink Reading. Rediscover Knowledge What if every time you opened a PDF, it didn’t just sit there—it spoke to you, connected ideas, and narrated meaning across your entire library? That’s the future we’re building — and we want you to help shape it. In the Connecting the Dots Challenge, your mission is to reimagine the humble PDF as an intelligent, interactive experience—one that understands structure, surfaces insights, and responds to you like a"
     },
     {
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 3,
       "section_title": "Your Mission",
-      "importance_rank": 10,
+      "importance_rank": 12,
       "text": "You're handed a PDF — but instead of simply reading it, you're tasked with making sense of it like a machine would. Your job is to extract a structured outline of the document — essentially the Title, and headings like H1, H2, and H3 — in a clean, hierarchical format. This outline will be the foundation for the rest of your hackathon journey."
+    },
+    {
+      "document": "file02.pdf",
+      "page_number": 11,
+      "section_title": "Chapter 3: Agile Testing Methods, Techniques, and Tools",
+      "importance_rank": 13,
+      "text": "The tester should be able to recall the concepts of test-driven development, acceptance testdriven development, and behavior-driven development. The tester should be able to recall the concepts of the test pyramid. The tester should be able to summarize the testing quadrants and their relationships with testing levels and testing types. For a given Agile project, the tester should be able to work as a tester in a Scrum team. The tester should be able to assess quality risks within an Agile proje"
+    },
+    {
+      "document": "file02_1753354244993.pdf",
+      "page_number": 11,
+      "section_title": "Chapter 3: Agile Testing Methods, Techniques, and Tools",
+      "importance_rank": 14,
+      "text": "The tester should be able to recall the concepts of test-driven development, acceptance testdriven development, and behavior-driven development. The tester should be able to recall the concepts of the test pyramid. The tester should be able to summarize the testing quadrants and their relationships with testing levels and testing types. For a given Agile project, the tester should be able to work as a tester in a Scrum team. The tester should be able to assess quality risks within an Agile proje"
     },
     {
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 2,
       "section_title": "Why This Matters",
-      "importance_rank": 11,
+      "importance_rank": 15,
       "text": "In a world flooded with documents, what wins is not more content — it’s context. You’re not just building tools — you’re building the future of how we read, learn, and connect. No matter your background — ML hacker, UI builder, or insight whisperer — this is your stage. Are you in? It’s time to read between the lines. Connect the dots. And build a PDF experience that feels like magic. Let’s go."
     },
     {
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 2,
       "section_title": "The Journey Ahead",
-      "importance_rank": 12,
+      "importance_rank": 16,
       "text": "• Round 1: Kick things off by building the brains — extract structured outlines from raw PDFs with blazing speed and pinpoint accuracy. Then, power it up with on-device intelligence that understands sections and links related ideas together. • Round 2: It’s showtime! Build a beautiful, intuitive reading webapp using Adobe’s PDF Embed API. You will be using your Round 1 work to design a futuristic webapp."
     },
     {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 5,
-      "section_title": "Pro Tips",
-      "importance_rank": 13,
-      "text": "• Don’t rely solely on font sizes for heading level determination — headings in some PDFs break that assumption. • Test your solution across both simple and complex PDFs. • Make your code modular — you’ll reuse this structure in Round 1B."
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 4,
-      "section_title": "Expected Execution",
-      "importance_rank": 14,
-      "text": "We will build the docker image using the following command: ```docker build --platform linux/amd64 -t mysolutionname:somerandomidentifier``` After building the image, we will run the solution using the run command specified in the submitted instructions. ```docker run --rm -v $(pwd)/input:/app/input -v $(pwd)/output:/app/output -- network none mysolutionname:somerandomidentifier``` Your container should: • Automatically process all PDFs from /app/input directory, generating a corresponding filen"
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 6,
-      "section_title": "Introduction",
-      "importance_rank": 15,
-      "text": "• Important – Please keep your Git Repo private till the competition deadline, you will be informed, when to make the repo public. What Not to Do • Do not hardcode headings or file-specific logic • Do not make API or web calls • Do not exceed the runtime/model size constraints [[Public Dataset Folder]] (For Sample Input and Output Files, please refer to the appendix)"
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 9,
-      "section_title": "Introduction",
-      "importance_rank": 16,
-      "text": "Deliverables • approach_explanation.md (300-500 words explaining methodology) • Dockerfile and execution instructions Sample input/output for testing"
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 4,
-      "section_title": "4. Sample Solution",
+      "document": "file02.pdf",
+      "page_number": 12,
+      "section_title": "4. References",
       "importance_rank": 17,
-      "text": "Docker Requirements • Please ensure your Dockerfile is compatible with AMD64 architecture. Since we will build and run the image on an AMD64 machine, your base image and any dependencies should support linux/amd64. Optionally, you can include the following in your Dockerfile to explicitly specify the platform: FROM -- platform=linux/amd64 <base_image> • CPU architecture: amd64 (x86_64) • No GPU dependencies • Model size (if used) ≤ 200MB • Should work offline — no network/internet calls"
+      "text": "4.1 Trademarks The following registered trademarks and service marks are used in this document: ISTQB® is a registered trademark of the International Software Testing Qualifications Board 4.2 Documents and Web Sites"
     },
     {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 5,
-      "section_title": "Points",
+      "document": "file02_1753354244993.pdf",
+      "page_number": 12,
+      "section_title": "4. References",
       "importance_rank": 18,
-      "text": "Heading Detection Accuracy (Precision + Recall) Performance (Time & Size Compliance) Bonus: Multilingual Handling (e.g., Japanese)"
+      "text": "4.1 Trademarks The following registered trademarks and service marks are used in this document: ISTQB® is a registered trademark of the International Software Testing Qualifications Board 4.2 Documents and Web Sites"
     },
     {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 5,
-      "section_title": "3. All dependencies installed within the container",
+      "document": "file02.pdf",
+      "page_number": 6,
+      "section_title": "1. Introduction to the Foundation Level Extensions",
       "importance_rank": 19,
-      "text": "4. A README.md that explains: o Your approach o Any models or libraries used o How to build and run your solution (This is purely for documentation purpose, your solution should run using the “Expected Execution” section above."
+      "text": "This overview document is intended for anyone with an interest in the ISTQB Foundation Level Extensions who wants a high-level introduction to the leading principles and an overview of the individual extension syllabi. From time to time, ISTQB will update this document to reflect any additional extensions that shall be introduced for the Foundation Level, or to reflect major changes in existing ones. Publications of the updated document will be available on the ISTQB website. The ISTQB Foundatio"
+    },
+    {
+      "document": "file02_1753354244993.pdf",
+      "page_number": 6,
+      "section_title": "1. Introduction to the Foundation Level Extensions",
+      "importance_rank": 20,
+      "text": "This overview document is intended for anyone with an interest in the ISTQB Foundation Level Extensions who wants a high-level introduction to the leading principles and an overview of the individual extension syllabi. From time to time, ISTQB will update this document to reflect any additional extensions that shall be introduced for the Foundation Level, or to reflect major changes in existing ones. Publications of the updated document will be available on the ISTQB website. The ISTQB Foundatio"
     }
   ],
   "subsection_analysis": [
@@ -147,12 +156,6 @@
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 7,
       "refined_text": ") • Persona can again be very diverse (Example: Researcher, Student, Salesperson, Journalist, Entrepreneur etc) • Job-to-be-done: This will be related to the persona (Example: Provide a literature review for a given t.",
-      "relevance_score": 4
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 2,
-      "refined_text": "In the Connecting the Dots Challenge, your mission is to reimagine the humble PDF as an intelligent, interactive experience—one that understands structure, surfaces insights, and responds to you like a.",
       "relevance_score": 4
     },
     {
@@ -169,18 +172,6 @@
     },
     {
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 2,
-      "refined_text": "Rediscover Knowledge What if every time you opened a PDF, it didn’t just sit there—it spoke to you, connected ideas, and narrated meaning across your entire library.",
-      "relevance_score": 3
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 3,
-      "refined_text": "You're handed a PDF — but instead of simply reading it, you're tasked with making sense of it like a machine would.",
-      "relevance_score": 3
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 7,
       "refined_text": "• Documents can be from any domain (Example: Research papers, school/college books, financial reports, news articles etc.",
       "relevance_score": 2
@@ -189,18 +180,6 @@
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 3,
       "refined_text": "PDFs are everywhere — but machines don’t naturally understand their structure.",
-      "relevance_score": 2
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 2,
-      "refined_text": "Welcome to the “Connecting the Dots” Challenge Rethink Reading.",
-      "relevance_score": 2
-    },
-    {
-      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
-      "page_number": 3,
-      "refined_text": "Your job is to extract a structured outline of the document — essentially the Title, and headings like H1, H2, and H3 — in a clean, hierarchical format.",
       "relevance_score": 2
     },
     {
@@ -231,6 +210,36 @@
       "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
       "page_number": 7,
       "refined_text": "Document Collection: 3-10 related PDFs Persona Definition: Role description with specific expertise and focus areas.",
+      "relevance_score": 1
+    },
+    {
+      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
+      "page_number": 8,
+      "refined_text": "Page Number Constraints • Must run on CPU only • Model size ≤ 1GB • Processing time ≤ 60 seconds for document collection (3-5 documents) • No internet access allowed during execution.",
+      "relevance_score": 1
+    },
+    {
+      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
+      "page_number": 3,
+      "refined_text": "What You Need to Build You must build a solution that: • Accepts a PDF file (up to 50 pages) • Extracts: o Title o Headings: H1, H2, H3 (with level and page number) • Outputs a valid JSON file in the format below: \"title\": \"Understanding AI\", \"outline\": [ { \"level\": \"H1\".",
+      "relevance_score": 1
+    },
+    {
+      "document": "file02.pdf",
+      "page_number": 1,
+      "refined_text": "Copyright Notice This document may be copied in its entirety, or extracts made, if the source is acknowledged.",
+      "relevance_score": 1
+    },
+    {
+      "document": "file02_1753354244993.pdf",
+      "page_number": 1,
+      "refined_text": "Copyright Notice This document may be copied in its entirety, or extracts made, if the source is acknowledged.",
+      "relevance_score": 1
+    },
+    {
+      "document": "6874faecd848a_Adobe_India_Hackathon_-_Challenge_Doc_1753348064230.pdf",
+      "page_number": 9,
+      "refined_text": "Section Relevance How well selected sections match persona + job requirements with proper stack ranking Sub-Section Relevance Quality of granular subsection extraction and ranking.",
       "relevance_score": 1
     }
   ]
